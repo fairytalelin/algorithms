@@ -12,10 +12,12 @@ typedef struct linkednode
 typedef struct linkedlist
 {
   lnode* head;
+  lnode* tail;
+  int count;
 }linkedlist;
 
 lnode* search(linkedlist*,int);
-void insert(linkedlist*,int);
+int insert(linkedlist*,int);
 int delete(linkedlist*,int);
 linkedlist* init();
 void iterate(linkedlist*);
@@ -37,6 +39,8 @@ int main()
   delete(l,50);
   putchar('\n');
   iterate(l);
+  printf("the tail node is %d\n",l->tail->value);
+  printf("the element number is %d\n",l->count);
 }
 
 lnode* search(linkedlist* list,int value)
@@ -47,15 +51,19 @@ lnode* search(linkedlist* list,int value)
   return node;
 }
 //从linkedlist头部插入新元素
-void insert(linkedlist* l,int value)
+int insert(linkedlist* l,int value)
 {
   lnode* node = (lnode*)malloc(sizeof(lnode));
   node->value=value;
   node->next=l->head;
   if(l->head!=NULL)
     l->head->prev=node;
+  else
+    l->tail = node;
   node->prev=NULL;
   l->head=node;
+  l->count++;
+  return l->count;
 }
 
 int delete(linkedlist* l,int value)
@@ -65,11 +73,14 @@ int delete(linkedlist* l,int value)
     return 0;
   if(node->next!=NULL)
     node->next->prev=node->prev;
+  else//否则删除的是尾部，需要更新linkedlist的tail字段属性
+    l->tail = l->tail->prev;
   if(node->prev!=NULL)
     node->prev->next=node->next;
   else//否则是删除头部，需要更新linkedlist的head字段属性
     l->head=node->next;
   free(node);
+  l->count--;
   return 1;
 }
 
@@ -77,6 +88,8 @@ linkedlist* init()
 {
   linkedlist* l = (linkedlist*)malloc(sizeof(linkedlist));
   l->head = NULL;
+  l->tail = NULL;
+  l->count = 0;
   return l;
 }
 void iterate(linkedlist* l)
