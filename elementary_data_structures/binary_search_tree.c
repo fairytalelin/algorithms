@@ -173,6 +173,31 @@ void insert_tree(tree_t *t,int key)
     p->right = new;
   }
 }
+//递归写法,node为递归比较的当前树节点,p为node的父节点
+void insert_tree_recrusion(tree_t *t,node_t* node,node_t* p,int key)
+{//根节点
+  if(p == NULL)
+  {
+    node = node_new(key);
+    t->root = node;
+    return;
+  }
+  if(node == NULL)
+  {
+    node = node_new(key);
+    node->parent = p;
+    if(key > p->key)
+      p->right = node;
+    else
+      p->left = node;
+  }
+  else if(node->key > key)
+    insert_tree_recrusion(t,node->left,node,key);
+  else
+    insert_tree_recrusion(t,node->right,node,key);
+
+}
+
 
 void transplant(tree_t *t,node_t *p,node_t *q)
 {
