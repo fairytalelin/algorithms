@@ -33,8 +33,8 @@ int main()
 
 el* initEl()
 {
-  el* el = malloc(sizeof(el));
-  return el;
+  el *e = malloc(sizeof(*e));
+  return e;
 }
 
 el directAddressSearch(el* T,int key)
