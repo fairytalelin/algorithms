@@ -19,11 +19,8 @@
 
 ```
 parent(i)
-  return 
+  return i/2;
   
-  
-****i/2;
-
 left(i)
   return 2*i;
 
