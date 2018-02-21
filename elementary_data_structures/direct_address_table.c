@@ -8,49 +8,47 @@
 
 #define MAXSIZE 12
 
-typedef struct element
-{
-  int key;
-  int value;
-}el;
+typedef struct element {
+    int key;
+    int value;
+} el;
 
-el directAddressSearch(el*,int);
-int directAddressInsert(el*,el*);
-int directAddressDelete(el**,el*);
-el* initEl();
+el directAddressSearch(el *, int);
 
-int main()
-{
-  el T[MAXSIZE];
-  el* e1 = initEl();
-  e1->value = 121;
-  e1->key = 3;
-  directAddressInsert(T,e1);
-  printf("T[%d]=%d\n",e1->key,T[e1->key].value);
-  el e2 = directAddressSearch(T,3);
-  printf("T[%d]=%d\n",e2.key,T[e2.key].value);
+int directAddressInsert(el *, el *);
+
+int directAddressDelete(el **, el *);
+
+el *initEl();
+
+int main() {
+    el T[MAXSIZE];
+    el *e1 = initEl();
+    e1->value = 121;
+    e1->key = 3;
+    directAddressInsert(T, e1);
+    printf("T[%d]=%d\n", e1->key, T[e1->key].value);
+    el e2 = directAddressSearch(T, 3);
+    printf("T[%d]=%d\n", e2.key, T[e2.key].value);
 }
 
-el* initEl()
-{
-  el *e = malloc(sizeof(*e));
-  return e;
+el *initEl() {
+    el *e = malloc(sizeof(*e));
+    return e;
 }
 
-el directAddressSearch(el* T,int key)
-{
-  return T[key];
+el directAddressSearch(el *T, int key) {
+    return T[key];
 }
 
-int directAddressInsert(el T[],el* el)
-{
- T[el->key] = *el;
-  return el->key;
+int directAddressInsert(el T[], el *el) {
+    T[el->key] = *el;
+    return el->key;
 }
-int directAddressDelete(el** T,el* el)
-{
-  T[el->key] = NULL;
-  int key = el->key;
-  free(el);
-  return key;
+
+int directAddressDelete(el **T, el *el) {
+    T[el->key] = NULL;
+    int key = el->key;
+    free(el);
+    return key;
 }
